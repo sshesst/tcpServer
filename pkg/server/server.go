@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"bufio"
@@ -19,15 +19,15 @@ func handleConnection(conn net.Conn) {
 	fmt.Printf("Соединение с %s закрыто.\n", conn.RemoteAddr())
 }
 
-func main() {
-	listener, err := net.Listen("tcp", "localhost:3000")
+func RunServer(port string) {
+	listener, err := net.Listen("tcp", "localhost:"+port)
 	if err != nil {
 		fmt.Println("Ошибка при прослушивании порта:", err)
 		return
 	}
 	defer listener.Close()
 
-	fmt.Println("Сервер запущен. Ожидание подключений на localhost:3000")
+	fmt.Printf("Сервер запущен на localhost:%s\n", port)
 
 	for {
 		conn, err := listener.Accept()
